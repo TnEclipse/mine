@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Me?</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', sans-serif; }
+
+body {
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    background:black;
+}
+
+/* Video background */
+video#bgVideo {
+    position:fixed;
+    top:50%; left:50%;
+    min-width:100%;
+    min-height:100%;
+    transform:translate(-50%,-50%);
+    z-index:-3;
+    object-fit:cover;
+    transition: transform 0.5s ease-out;
+}
+
+/* Particle canvas */
+canvas#particles, canvas#shapes {
+    position:fixed;
+    top:0; left:0;
+    width:100%;
+    height:100%;
+    z-index:-2;
+    pointer-events:none;
+}
+
+/* Overlay */
+#overlay {
+    position:fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-size:2rem;
+    cursor:pointer;
+    z-index:2;
+    backdrop-filter:blur(6px);
+    background-position:center;
+    background-size:cover;
+    background-repeat:no-repeat;
+    transition: opacity 0.5s ease;
+}
+
+/* Chat container - frosted glass style */
+.chat-container {
+    width:90%;
+    max-width:400px;
+    background: rgba(15,23,42,0.35); /* lighter opacity */
+    border-radius:20px;
+    overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,0,0,0.2);
+    border:1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+    padding:25px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+    animation: fadeIn 0.8s ease-out;
+    position:relative;
+    transition: transform 0.4s ease, box-shadow 0.3s ease;
+}
+
+/* Chat hover effect */
+.chat-container:hover {
+    transform: translateY(-5px);
+    box-shadow:0 30px 80px rgba(0,0,0,0.4);
+}
+
+/* User Avatar */
+.user-avatar {
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    background-size:cover;
+    background-position:center;
+    box-shadow:0 5px 15px rgba(0,0,0,0.4);
+    animation: avatarPulse 2.5s infinite ease-in-out;
+}
+
+@keyframes avatarPulse {
+    0%,100% { box-shadow:0 5px 15px rgba(0,0,0,0.4); transform:scale(1);}
+    50% { box-shadow:0 15px 25px rgba(255,255,255,0.2); transform:scale(1.05);}
+}
+
+/* Username with white glow */
+.username {
+    font-size:1.8rem;
+    font-weight:700;
+    color:white;
+    text-shadow:0 0 10px #fff, 0 0 20px #fff;
+}
+
+/* Status / Motto */
+.status {
+    font-size:1rem;
+    font-style:italic;
+    color:#0ff;
+    text-align:center;
+    margin-bottom:5px;
+}
+
+/* Bio Section - smaller & transparent */
+.bio {
+    font-size:0.85rem;
+    color:#cbd5e1;
+    text-align:center;
+    padding:8px 12px;
+    background: rgba(30,41,59,0.25);
+    border-radius:12px;
+    width:100%;
+    box-shadow:0 0 10px rgba(255,255,255,0.05);
+    backdrop-filter: blur(6px);
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.bio:hover {
+    background: rgba(30,41,59,0.35);
+    box-shadow:0 0 15px rgba(255,255,255,0.1);
+}
+
+/* Info / Extras - transparent items */
+.info {
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    gap:6px;
+}
+
+.info .item {
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background: rgba(0,0,0,0.25);
+    padding:6px 10px;
+    border-radius:8px;
+    color:#cbd5e1;
+    font-size:0.9rem;
+    backdrop-filter: blur(6px);
+}
+
+.info .item img {
+    width:24px;
+    height:24px;
+    border-radius:4px;
+}
+
+/* Highlight dynamic text */
+#gamingHours, #favSong {
+    color:#0ff;
+    font}
+
+/* Social Buttons - outside the box */
+.social-buttons {
+    display:flex;
+    gap:15px;
+    margin-top:15px;
+    z-index:1;
+}
+
+.social-buttons a {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:rgba(30,41,59,0.8);
+    color:white;
+    font-size:1.5rem;
+    transition:all 0.3s ease;
+    text-decoration:none;
+}
+
+.social-buttons a:hover {
+    transform:translateY(-3px) scale(1.1);
+    box-shadow:0 0 15px rgba(255,255,255,0.3);
+}
+
+/* Animations */
+@keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+</style>
+</head>
+<body>
+
+<!-- Video Background -->
+<video id="bgVideo" loop poster="background-thumb.jpg">
+    <source src="background.mp4" type="video/mp4">
+</video>
+
+<!-- Particle Canvas -->
+<canvas id="particles"></canvas>
+<canvas id="shapes"></canvas>
+
+<!-- Overlay -->
+<div id="overlay">Click to View</div>
+
+<!-- Chat Container -->
+<div class="chat-container">
+    <div class="user-avatar" id="userAvatar"></div>
+    <div class="username">zm_aron</div>
+    <div class="status">Quote here? idk</div>
+    <div class="bio">Lil project cuz im bored brah</div>
+
+    <!-- Info section -->
+    <div class="info">
+        <div class="item"><strong>16, Priestess, MBTI</strong></div>
+        <div class="item"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4gYfa1NsvldT41EjsLdkctiL254SjupLkVPiEeI5c-g&s=10" alt="Game 1 Logo"><span>Roblox</span></div>
+        <div class="item"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCtQdt4DGLpbjQhFAJ0ubUu5CxZucPwokmXKC0AE-2oQ&s=10" alt="Game 2 Logo"><span>Mobile Legends: Bang Bang</span></div>
+
+        <div class="item"><strong>Hours spent doing nothing:</strong> <span id="gamingHours">0</span>+</div>
+        <div class="item"><strong>Loves the song:</strong><span id="favSong"></span></div>
+    </div>
+</div>
+
+<!-- Social buttons outside box -->
+<div class="social-buttons">
+    <a href="https://twitter.com/yourhandle" target="_blank"><i class="fab fa-twitter"></i></a>
+    <a href="https://open.spotify.com/user/yourprofile" target="_blank"><i class="fab fa-spotify"></i></a>
+</div>
+
+<script>
+document.getElementById('userAvatar').style.backgroundImage = "url('pfp.jpg')";
+
+const overlay = document.getElementById('overlay');
+const video = document.getElementById('bgVideo');
+overlay.addEventListener('click', ()=>{
+    video.currentTime = 0;
+    video.muted = false;
+    video.play();
+    overlay.style.opacity = 0;
+    setTimeout(()=>overlay.style.display='none',500);
+});
+overlay.style.backgroundImage = "url('background-thumb.jpg')";
+
+// Hours counter
+let gamingHours=0;
+const hoursElem=document.getElementById('gamingHours');
+function incrementHours(){ gamingHours++; hoursElem.textContent=gamingHours; setTimeout(incrementHours,200);}
+incrementHours();
+
+// Favorite song
+const favSong="Mind Games By Sickick";
+document.getElementById('favSong').textContent=favSong;
+
+</script>
+</body>
+</html>
