@@ -18,7 +18,6 @@ body {
     background:black;
 }
 
-/* Video background */
 video#bgVideo {
     position:fixed;
     top:50%; left:50%;
@@ -30,7 +29,6 @@ video#bgVideo {
     transition: transform 0.5s ease-out;
 }
 
-/* Particle canvas */
 canvas#particles, canvas#shapes {
     position:fixed;
     top:0; left:0;
@@ -40,7 +38,6 @@ canvas#particles, canvas#shapes {
     pointer-events:none;
 }
 
-/* Overlay */
 #overlay {
     position:fixed;
     top:0; left:0;
@@ -59,11 +56,10 @@ canvas#particles, canvas#shapes {
     transition: opacity 0.5s ease;
 }
 
-/* Chat container - frosted glass style */
 .chat-container {
     width:90%;
     max-width:400px;
-    background: rgba(15,23,42,0.35); /* lighter opacity */
+    background: rgba(15,23,42,0.35);
     border-radius:20px;
     overflow:hidden;
     box-shadow:0 20px 60px rgba(0,0,0,0.2);
@@ -79,13 +75,11 @@ canvas#particles, canvas#shapes {
     transition: transform 0.4s ease, box-shadow 0.3s ease;
 }
 
-/* Chat hover effect */
 .chat-container:hover {
     transform: translateY(-5px);
     box-shadow:0 30px 80px rgba(0,0,0,0.4);
 }
 
-/* User Avatar */
 .user-avatar {
     width:100px;
     height:100px;
@@ -101,7 +95,6 @@ canvas#particles, canvas#shapes {
     50% { box-shadow:0 15px 25px rgba(255,255,255,0.2); transform:scale(1.05);}
 }
 
-/* Username with white glow */
 .username {
     font-size:1.8rem;
     font-weight:700;
@@ -109,7 +102,6 @@ canvas#particles, canvas#shapes {
     text-shadow:0 0 10px #fff, 0 0 20px #fff;
 }
 
-/* Status / Motto */
 .status {
     font-size:1rem;
     font-style:italic;
@@ -118,7 +110,6 @@ canvas#particles, canvas#shapes {
     margin-bottom:5px;
 }
 
-/* Bio Section - smaller & transparent */
 .bio {
     font-size:0.85rem;
     color:#cbd5e1;
@@ -137,7 +128,6 @@ canvas#particles, canvas#shapes {
     box-shadow:0 0 15px rgba(255,255,255,0.1);
 }
 
-/* Info / Extras - transparent items */
 .info {
     display:flex;
     flex-direction:column;
@@ -163,12 +153,11 @@ canvas#particles, canvas#shapes {
     border-radius:4px;
 }
 
-/* Highlight dynamic text */
 #gamingHours, #favSong {
     color:#0ff;
-    font}
+    font;
+}
 
-/* Social Buttons - outside the box */
 .social-buttons {
     display:flex;
     gap:15px;
@@ -195,32 +184,26 @@ canvas#particles, canvas#shapes {
     box-shadow:0 0 15px rgba(255,255,255,0.3);
 }
 
-/* Animations */
 @keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
 </style>
 </head>
 <body>
 
-<!-- Video Background -->
 <video id="bgVideo" loop poster="background-thumb.jpg">
     <source src="background.mp4" type="video/mp4">
 </video>
 
-<!-- Particle Canvas -->
 <canvas id="particles"></canvas>
 <canvas id="shapes"></canvas>
 
-<!-- Overlay -->
 <div id="overlay">Click to View</div>
 
-<!-- Chat Container -->
 <div class="chat-container">
     <div class="user-avatar" id="userAvatar"></div>
     <div class="username">zm_aron</div>
     <div class="status">Quote here? idk</div>
     <div class="bio">Lil project cuz im bored brah</div>
 
-    <!-- Info section -->
     <div class="info">
         <div class="item"><strong>16, Priestess, MBTI</strong></div>
         <div class="item"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4gYfa1NsvldT41EjsLdkctiL254SjupLkVPiEeI5c-g&s=10" alt="Game 1 Logo"><span>Roblox</span></div>
@@ -231,7 +214,6 @@ canvas#particles, canvas#shapes {
     </div>
 </div>
 
-<!-- Social buttons outside box -->
 <div class="social-buttons">
     <a href="https://twitter.com/yourhandle" target="_blank"><i class="fab fa-twitter"></i></a>
     <a href="https://open.spotify.com/user/yourprofile" target="_blank"><i class="fab fa-spotify"></i></a>
@@ -251,13 +233,11 @@ overlay.addEventListener('click', ()=>{
 });
 overlay.style.backgroundImage = "url('background-thumb.jpg')";
 
-// Hours counter
 let gamingHours=0;
 const hoursElem=document.getElementById('gamingHours');
 function incrementHours(){ gamingHours++; hoursElem.textContent=gamingHours; setTimeout(incrementHours,200);}
 incrementHours();
 
-// Favorite song
 const favSong="Mind Games By Sickick";
 document.getElementById('favSong').textContent=favSong;
 
