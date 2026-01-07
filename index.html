@@ -5,8 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About Me?</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <style>
-* { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', sans-serif; }
+* {
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
 
 body {
     min-height:100vh;
@@ -18,120 +24,112 @@ body {
     background:black;
 }
 
+/* Background video */
 video#bgVideo {
     position:fixed;
-    top:50%; left:50%;
+    top:50%;
+    left:50%;
     min-width:100%;
     min-height:100%;
     transform:translate(-50%,-50%);
     z-index:-3;
     object-fit:cover;
-    transition: transform 0.5s ease-out;
 }
 
+/* Particles */
 canvas#particles, canvas#shapes {
     position:fixed;
-    top:0; left:0;
+    top:0;
+    left:0;
     width:100%;
     height:100%;
     z-index:-2;
     pointer-events:none;
 }
 
+/* Overlay */
 #overlay {
     position:fixed;
-    top:0; left:0;
-    width:100%; height:100%;
+    inset:0;
     display:flex;
     justify-content:center;
     align-items:center;
-    color:white;
     font-size:2rem;
+    color:white;
     cursor:pointer;
     z-index:2;
     backdrop-filter:blur(6px);
-    background-position:center;
     background-size:cover;
-    background-repeat:no-repeat;
-    transition: opacity 0.5s ease;
+    background-position:center;
+    transition:opacity .5s ease;
 }
 
+/* Main box */
 .chat-container {
     width:90%;
     max-width:400px;
-    background: rgba(15,23,42,0.35);
+    background:rgba(15,23,42,0.35);
     border-radius:20px;
-    overflow:hidden;
-    box-shadow:0 20px 60px rgba(0,0,0,0.2);
-    border:1px solid rgba(255,255,255,0.1);
-    backdrop-filter: blur(12px);
     padding:25px;
     display:flex;
     flex-direction:column;
     align-items:center;
     gap:12px;
-    animation: fadeIn 0.8s ease-out;
-    position:relative;
-    transition: transform 0.4s ease, box-shadow 0.3s ease;
+    backdrop-filter:blur(12px);
+    border:1px solid rgba(255,255,255,0.1);
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+    animation:fadeIn .8s ease-out;
 }
 
-.chat-container:hover {
-    transform: translateY(-5px);
-    box-shadow:0 30px 80px rgba(0,0,0,0.4);
-}
-
+/* Avatar */
 .user-avatar {
     width:100px;
     height:100px;
     border-radius:50%;
     background-size:cover;
     background-position:center;
-    box-shadow:0 5px 15px rgba(0,0,0,0.4);
-    animation: avatarPulse 2.5s infinite ease-in-out;
+    box-shadow:0 5px 15px rgba(0,0,0,.4);
+    animation:avatarPulse 2.5s infinite ease-in-out;
 }
 
 @keyframes avatarPulse {
-    0%,100% { box-shadow:0 5px 15px rgba(0,0,0,0.4); transform:scale(1);}
-    50% { box-shadow:0 15px 25px rgba(255,255,255,0.2); transform:scale(1.05);}
+    0%,100% { transform:scale(1); }
+    50% { transform:scale(1.05); }
 }
 
+/* Username */
 .username {
     font-size:1.8rem;
     font-weight:700;
     color:white;
-    text-shadow:0 0 10px #fff, 0 0 20px #fff;
+    text-shadow:0 0 10px rgba(255,255,255,.6);
 }
 
+/* Status */
 .status {
-    font-size:1rem;
+    font-size:.95rem;
     font-style:italic;
-    color:#0ff;
+    color:#cbd5e1;
     text-align:center;
-    margin-bottom:5px;
 }
 
+/* Bio */
 .bio {
-    font-size:0.85rem;
+    font-size:.85rem;
     color:#cbd5e1;
     text-align:center;
     padding:8px 12px;
-    background: rgba(30,41,59,0.25);
+    background:rgba(30,41,59,.25);
     border-radius:12px;
     width:100%;
-    box-shadow:0 0 10px rgba(255,255,255,0.05);
-    backdrop-filter: blur(6px);
-    transition: background 0.3s, box-shadow 0.3s;
+    backdrop-filter:blur(6px);
 }
 
-.bio:hover {
-    background: rgba(30,41,59,0.35);
-    box-shadow:0 0 15px rgba(255,255,255,0.1);
-}
-
+/* Info list */
 .info {
+    width:100%;
     display:flex;
     flex-direction:column;
-    width:100%;
     gap:6px;
 }
 
@@ -139,12 +137,12 @@ canvas#particles, canvas#shapes {
     display:flex;
     align-items:center;
     gap:8px;
-    background: rgba(0,0,0,0.25);
+    background:rgba(0,0,0,.25);
     padding:6px 10px;
     border-radius:8px;
+    font-size:.9rem;
     color:#cbd5e1;
-    font-size:0.9rem;
-    backdrop-filter: blur(6px);
+    backdrop-filter:blur(6px);
 }
 
 .info .item img {
@@ -153,40 +151,46 @@ canvas#particles, canvas#shapes {
     border-radius:4px;
 }
 
-#gamingHours, #favSong {
-    color:#0ff;
-    font;
+/* Make dynamic text normal */
+#gamingHours,
+#favSong {
+    color:inherit;
+    font-weight:normal;
 }
 
+/* Socials (outside box) */
 .social-buttons {
     display:flex;
     gap:15px;
-    margin-top:15px;
-    z-index:1;
+    margin-top:20px;
 }
 
 .social-buttons a {
-    display:flex;
-    align-items:center;
-    justify-content:center;
     width:50px;
     height:50px;
     border-radius:50%;
-    background:rgba(30,41,59,0.8);
-    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
     font-size:1.5rem;
-    transition:all 0.3s ease;
+    color:white;
+    background:rgba(30,41,59,.8);
+    transition:.3s;
     text-decoration:none;
 }
 
 .social-buttons a:hover {
     transform:translateY(-3px) scale(1.1);
-    box-shadow:0 0 15px rgba(255,255,255,0.3);
+    box-shadow:0 0 15px rgba(255,255,255,.3);
 }
 
-@keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+@keyframes fadeIn {
+    from { opacity:0; transform:translateY(10px); }
+    to { opacity:1; transform:none; }
+}
 </style>
 </head>
+
 <body>
 
 <video id="bgVideo" loop poster="background-thumb.jpg">
@@ -201,22 +205,41 @@ canvas#particles, canvas#shapes {
 <div class="chat-container">
     <div class="user-avatar" id="userAvatar"></div>
     <div class="username">zm_aron</div>
-    <div class="status">Insert Diabolical Quote {Here} </div>
+    <div class="status">Insert Diabolical Quote {Here}</div>
     <div class="bio">Lil project cuz im bored brah</div>
 
     <div class="info">
         <div class="item"><strong>15, Priestess, MBTI</strong></div>
-        <div class="item"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4gYfa1NsvldT41EjsLdkctiL254SjupLkVPiEeI5c-g&s=10" alt="Game 1 Logo"><span>Roblox</span></div>
-        <div class="item"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCtQdt4DGLpbjQhFAJ0ubUu5CxZucPwokmXKC0AE-2oQ&s=10" alt="Game 2 Logo"><span>Mobile Legends: Bang Bang</span></div>
 
-        <div class="item"><strong>Hours spent doing nothing:</strong> <span id="gamingHours">0</span>+</div>
-        <div class="item"><strong>Loves the song:</strong><span id="favSong"></span></div>
+        <div class="item">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4gYfa1NsvldT41EjsLdkctiL254SjupLkVPiEeI5c-g&s=10">
+            Roblox
+        </div>
+
+        <div class="item">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCtQdt4DGLpbjQhFAJ0ubUu5CxZucPwokmXKC0AE-2oQ&s=10">
+            Mobile Legends: Bang Bang
+        </div>
+
+        <div class="item">
+            <strong>Hours spent doing nothing:</strong>
+            <span id="gamingHours">0</span>+
+        </div>
+
+        <div class="item">
+            <strong>Loves the song:</strong>
+            <span id="favSong"></span>
+        </div>
     </div>
 </div>
 
 <div class="social-buttons">
-    <a href="https://x.com/Pencxl?t=WqOszx48_eBdxwnZlOlCRw&s=09" target="_blank"><i class="fab fa-twitter"></i></a>
-    <a href="https://open.spotify.com/user/j1ykf0o0b5gmxt4yvge8qelok?si=MEgCfavDTJWHY3vMixQSng" target="_blank"><i class="fab fa-spotify"></i></a>
+    <a href="https://x.com/Pencxl?t=WqOszx48_eBdxwnZlOlCRw&s=09" target="_blank">
+        <i class="fab fa-twitter"></i>
+    </a>
+    <a href="https://open.spotify.com/user/j1ykf0o0b5gmxt4yvge8qelok" target="_blank">
+        <i class="fab fa-spotify"></i>
+    </a>
 </div>
 
 <script>
@@ -224,23 +247,28 @@ document.getElementById('userAvatar').style.backgroundImage = "url('pfp.jpg')";
 
 const overlay = document.getElementById('overlay');
 const video = document.getElementById('bgVideo');
-overlay.addEventListener('click', ()=>{
-    video.currentTime = 0;
+
+overlay.addEventListener('click', () => {
     video.muted = false;
     video.play();
     overlay.style.opacity = 0;
-    setTimeout(()=>overlay.style.display='none',500);
+    setTimeout(() => overlay.style.display = 'none', 500);
 });
+
 overlay.style.backgroundImage = "url('background-thumb.jpg')";
 
-let gamingHours=0;
-const hoursElem=document.getElementById('gamingHours');
-function incrementHours(){ gamingHours++; hoursElem.textContent=gamingHours; setTimeout(incrementHours,200);}
-incrementHours();
+/* Infinite counter */
+let gamingHours = 0;
+const hoursElem = document.getElementById('gamingHours');
+(function tick(){
+    gamingHours++;
+    hoursElem.textContent = gamingHours;
+    setTimeout(tick, 200);
+})();
 
-const favSong="Mind Games By Sickick";
-document.getElementById('favSong').textContent=favSong;
-
+/* Song */
+document.getElementById('favSong').textContent = "Mind Games by Sickick";
 </script>
+
 </body>
 </html>
